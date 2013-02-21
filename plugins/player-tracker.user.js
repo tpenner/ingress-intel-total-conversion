@@ -83,6 +83,10 @@ window.plugin.playerTracker.processNewData = function(data) {
           skipThisMessage = true;
           return false;
         }
+         if(markup[1].plain.indexOf('destroyed a Control Field') !== -1) {
+          skipThisMessage = true;
+          return false;
+        }
         break;
       case 'PLAYER':
         pguid = markup[1].guid;
