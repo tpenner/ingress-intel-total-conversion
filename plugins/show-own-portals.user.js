@@ -3,8 +3,8 @@
 // @name           iitc: show own portals
 // @version        0.1
 // @namespace      https://github.com/breunigs/ingress-intel-total-conversion
-// @updateURL      https://raw.github.com/breunigs/ingress-intel-total-conversion/gh-pages/plugins/show-own-portals.user.js
-// @downloadURL    https://raw.github.com/breunigs/ingress-intel-total-conversion/gh-pages/plugins/show-own-portals.user.js
+// @updateURL      https://raw.github.com/breunigs/ingress-intel-total-conversion/gh-pages/plugins/show-portal-weakness.user.js
+// @downloadURL    https://raw.github.com/breunigs/ingress-intel-total-conversion/gh-pages/plugins/show-portal-weakness.user.js
 // @description    Uses the fill color of the portals to denote if the portal is owned by you (captured, resonator, shied)
 // @include        http://www.ingress.com/intel*
 // @match          http://www.ingress.com/intel*
@@ -28,17 +28,23 @@ window.plugin.showOwnPortals.portalAdded = function(data) {
   // window.portals[pGuid].options.details.captured.capturingPlayerId
   
   // to do: check ownership of shields
-    
+      // window.portals[pGuid].options.details.portalV2.linkedModArray[0-3].installingUser
+  
   
   var d = data.portal.options.details;
   var portal_owned_by_me = false;
-  if(getTeam(d) != 0)
+  
+  if(PLAYER.team == "RESISTANCE")
   {
-    //check if portal has energy
-    if(window.getTotalPortalEnergy(d)> 0 && window.getCurrentPortalEnergy(d) < window.getTotalPortalEnergy(d))
-    {
-      portal_owned_by_me = false;
-    }
+    var myTeam = TEAM_RES;
+  } else if(PLAYER.team == "ENLIGHTENED"){
+    var myTeam = TEAM_ENL;
+  }else{
+    var myTeam = TEAM_NONE;
+  }
+  var portalTeam = getTeam(d);
+  if((portalTeam != 0) && (portalTeam == myTeam))
+  {
     //check if portal is captured by me
     if(getPlayerName(d.captured.capturingPlayerId) == PLAYER.nickname)
       {
@@ -48,6 +54,13 @@ window.plugin.showOwnPortals.portalAdded = function(data) {
     $.each(d.resonatorArray.resonators, function(ind, reso)
     {
       if(getPlayerName(reso.ownerGuid) == PLAYER.nickname) {
+        portal_owned_by_me = true;
+      }
+    });      
+  //check if any shield is deployed by me
+    $.each(d.portalV2.linkedModArray, function(ind, mod)
+    {
+      if(getPlayerName(mod.installingUser) == PLAYER.nickname) {
         portal_owned_by_me = true;
       }
     });    
