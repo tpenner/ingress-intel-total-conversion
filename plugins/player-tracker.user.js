@@ -76,7 +76,7 @@ window.plugin.playerTracker.processNewData = function(data) {
     $.each(json[2].plext.markup, function(ind, markup) {
       switch(markup[0]) {
       case 'TEXT':
-        // Destroy link messages depend on how the link was originally
+        // Destroy link & field messages depend on how the link was originally
         // created. Therefore it’s not clear which portal the player is
         // at, so ignore it.
         if((markup[1].plain.indexOf('destroyed the Link') !== -1) || (markup[1].plain.indexOf('destroyed a Control Field') !== -1)){
