@@ -49,7 +49,7 @@ window.plugin.showOwnPortals.portalAdded = function(data) {
         portal_owned_by_me = true;
       }
     });      
-  //check if any shield is deployed by me
+    //check if any shield is deployed by me
     $.each(d.portalV2.linkedModArray, function(ind, mod) {
       if(getPlayerName(mod.installingUser) == PLAYER.nickname) {
         portal_owned_by_me = true;
