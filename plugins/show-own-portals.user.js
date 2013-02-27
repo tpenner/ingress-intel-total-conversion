@@ -1,13 +1,13 @@
 // ==UserScript==
 // @id             iitc-plugin-show-own-portals@tpenner
 // @name           iitc: show own portals
-// @version        0.2.8
-// @namespace      https://github.com/breunigs/ingress-intel-total-conversion
-// @updateURL      https://raw.github.com/breunigs/ingress-intel-total-conversion/gh-pages/plugins/show-own-portals.user.js
-// @downloadURL    https://raw.github.com/breunigs/ingress-intel-total-conversion/gh-pages/plugins/show-own-portals.user.js
+// @version        0.3.3
+// @namespace      https://github.com/tpenner/ingress-intel-total-conversion
+// @updateURL      https://raw.github.com/tpenner/ingress-intel-total-conversion/gh-pages/plugins/show-own-portals.user.js
+// @downloadURL    https://raw.github.com/tpenner/ingress-intel-total-conversion/gh-pages/plugins/show-own-portals.user.js
 // @description    Uses the color of the portals to denote if the portal is owned by you (captured, resonator, shield)
-// @include        http://www.ingress.com/intel*
-// @match          http://www.ingress.com/intel*
+// @include        https://www.ingress.com/intel*
+// @match          https://www.ingress.com/intel*
 // ==/UserScript==
 
 function wrapper() {
@@ -17,6 +17,11 @@ if(typeof window.plugin !== 'function') window.plugin = function() {};
 
 // PLUGIN START ////////////////////////////////////////////////////////
 
+var SHOW_OWN_PORTALS = {
+    color: '#FFF',
+    opacity: 1
+};
+
 // use own namespace for plugin
 window.plugin.showOwnPortals = function() {};
 
@@ -25,7 +30,7 @@ window.plugin.showOwnPortals.portalAdded = function(data) {
   // window.portals[pGuid].options.details.resonatorArray.resonators.[0-7].ownerGuid
   // window.portals[pGuid].options.details.portalV2.linkedModArray[0-3].installingUser
   // window.portals[pGuid].options.details.captured.capturingPlayerId  
-  
+    
   var d = data.portal.options.details;
   var portal_owned_by_me = false;
   var myTeam = TEAM_NONE;
@@ -39,31 +44,28 @@ window.plugin.showOwnPortals.portalAdded = function(data) {
   var portalTeam = getTeam(d);
 
   if((portalTeam !== 0) && (portalTeam === myTeam)) {
-    //check if portal is captured by me
+    // check if portal is captured by me
     if(getPlayerName(d.captured.capturingPlayerId) == PLAYER.nickname) {
         portal_owned_by_me = true;
     }
-    //check if any resonator is deployed by me
+    // check if any resonator is deployed by me
     $.each(d.resonatorArray.resonators, function(ind, reso) {
 	  if(reso !== null) {
         if(getPlayerName(reso.ownerGuid) === PLAYER.nickname) {
           portal_owned_by_me = true;
         }
 	  }
-    });      
-    //check if any shield is deployed by me
+    });
+    // check if any shield is deployed by me
     $.each(d.portalV2.linkedModArray, function(ind, mod) {
 	  if(mod !== null) {
         if(getPlayerName(mod.installingUser) === PLAYER.nickname) {
           portal_owned_by_me = true;
         }
       }
-    });    
+    });
     if(portal_owned_by_me) {
-      var color = window.COLOR_OWN_PORTAL;
-      var fill_opacity = 1;
-      var params = {fillColor: color, fillOpacity: fill_opacity};
-//      var params = {fillColor: color, fillOpacity: fill_opacity, radius: data.portal.options.radius+1};
+      var params = {fillColor: SHOW_OWN_PORTALS.color, fillOpacity: SHOW_OWN_PORTALS.opacity};
       data.portal.setStyle(params);
     }
   }
@@ -71,7 +73,6 @@ window.plugin.showOwnPortals.portalAdded = function(data) {
 
 var setup =  function() {
   window.addHook('portalAdded', window.plugin.showOwnPortals.portalAdded);
-  window.COLOR_OWN_PORTAL = '#FFF'; // white
 }
 
 
