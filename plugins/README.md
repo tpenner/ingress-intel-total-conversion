@@ -14,7 +14,7 @@ Available Plugins
 - [**Highlight Weakened Portals**](https://raw.github.com/breunigs/ingress-intel-total-conversion/gh-pages/plugins/show-portal-weakness.user.js) fill portals with red to indicate portal's state of disrepair. The brighter the color the more attention needed (recharge, shields, resonators). A dashed portal means a resonator is missing.
 - [**Render Limit Increase**](https://raw.github.com/breunigs/ingress-intel-total-conversion/gh-pages/plugins/render-limit-increase.user.js) increases render limits. Good for high density areas (e.g. London, UK) and faster PCs.
 - [**Resonator Display Zoom Level Decrease**](https://raw.github.com/breunigs/ingress-intel-total-conversion/gh-pages/plugins/resonator-display-zoom-level-decrease.user.js) Resonator start displaying earlier.
-- [**Show Own Portals**](https://raw.github.com/breunigs/ingress-intel-total-conversion/gh-pages/plugins/show-own-portals.user.js) Highlight portals you helped deploy.
+- [**Show Own Portals**](https://raw.github.com/tpenner/ingress-intel-total-conversion/gh-pages/plugins/show-own-portals.user.js) Highlight portals you helped deploy.
 
 ### available only with the development version
 
