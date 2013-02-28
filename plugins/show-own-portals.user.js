@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             iitc-plugin-show-own-portals@tpenner
 // @name           iitc: show own portals
-// @version        0.3.3.3
+// @version        0.3.4
 // @namespace      https://github.com/tpenner/ingress-intel-total-conversion
 // @updateURL      https://raw.github.com/tpenner/ingress-intel-total-conversion/gh-pages/plugins/show-own-portals.user.js
 // @downloadURL    https://raw.github.com/tpenner/ingress-intel-total-conversion/gh-pages/plugins/show-own-portals.user.js
@@ -66,7 +66,14 @@ window.plugin.showOwnPortals.portalAdded = function(data) {
     });
     if(portal_owned_by_me) {
       var coord = [d.locationE6.latE6/1E6, d.locationE6.lngE6/1E6];
-	  L.circle(coord, 45, { fill: false, color: SHOW_OWN_PORTALS.color, weight: 15, clickable: false }).addTo(map);
+	  var portalLevel = getPortalLevel(d);
+	  var lvRadius = Math.max(portalLevel + 3, 5);
+	  var lvWeight = Math.max(2, portalLevel / 1.5);
+	  L.circleMarker(coord, {
+        radius: lvRadius + lvWeight,
+	    weight: 10,
+        color: SHOW_OWN_PORTALS.color,
+        clickable: false}).addTo(map);
     }
   }
 }
