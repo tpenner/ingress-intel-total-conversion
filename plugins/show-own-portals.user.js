@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             iitc-plugin-show-own-portals@tpenner
 // @name           iitc: show own portals
-// @version        0.3.5
+// @version        0.3.6
 // @namespace      https://github.com/tpenner/ingress-intel-total-conversion
 // @updateURL      https://raw.github.com/tpenner/ingress-intel-total-conversion/gh-pages/plugins/show-own-portals.user.js
 // @downloadURL    https://raw.github.com/tpenner/ingress-intel-total-conversion/gh-pages/plugins/show-own-portals.user.js
@@ -25,7 +25,7 @@ var SHOW_OWN_PORTALS = {
 // use own namespace for plugin
 window.plugin.showOwnPortals = function() {};
 
-window.plugin.showOwnPortals.portalAdded = function(data) {
+window.plugin.showOwnPortals.portalDataLoaded = function(data) {
   // color the portal if own player_guid is found in either a resonator, shield, or capturer  
   // window.portals[pGuid].options.details.resonatorArray.resonators.[0-7].ownerGuid
   // window.portals[pGuid].options.details.portalV2.linkedModArray[0-3].installingUser
@@ -80,7 +80,7 @@ window.plugin.showOwnPortals.portalAdded = function(data) {
 }
 
 var setup =  function() {
-  window.addHook('portalAdded', window.plugin.showOwnPortals.portalAdded);
+  window.addHook('portalDataLoaded', window.plugin.showOwnPortals.portalDataLoaded);
 }
 
 
