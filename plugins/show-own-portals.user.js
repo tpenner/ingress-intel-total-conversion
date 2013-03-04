@@ -25,7 +25,7 @@ var SHOW_OWN_PORTALS = {
 // use own namespace for plugin
 window.plugin.showOwnPortals = function() {};
 
-window.plugin.showOwnPortals.portalDataLoaded = function(data) {
+window.plugin.showOwnPortals.portalAdded = function(data) {
   // color the portal if own player_guid is found in either a resonator, shield, or capturer  
   // window.portals[pGuid].options.details.resonatorArray.resonators.[0-7].ownerGuid
   // window.portals[pGuid].options.details.portalV2.linkedModArray[0-3].installingUser
@@ -79,8 +79,18 @@ window.plugin.showOwnPortals.portalDataLoaded = function(data) {
   }
 }
 
+
+window.plugin.showOwnPortals.portalDataLoaded = function(data) {
+  $.each(data.portals, function(ind, portal) {
+    if(window.portals[portal[0]]) {
+      window.plugin.showOwnPortals.portalAdded({portal: window.portals[portal[0]]});
+    }
+  });
+}
+
 var setup =  function() {
-  window.addHook('portalDataLoaded', window.plugin.showOwnPortals.portalDataLoaded);
+ // window.addHook('portalDataLoaded', window.plugin.showOwnPortals.portalDataLoaded);
+  window.addHook('portalAdded', window.plugin.showOwnPortals.portalAdded);
 }
 
 
