@@ -1,7 +1,7 @@
 // ==UserScript==
 // @id             iitc-plugin-show-own-portals@tpenner
 // @name           iitc: show own portals
-// @version        0.3.6
+// @version        0.3.7
 // @namespace      https://github.com/tpenner/ingress-intel-total-conversion
 // @updateURL      https://raw.github.com/tpenner/ingress-intel-total-conversion/gh-pages/plugins/show-own-portals.user.js
 // @downloadURL    https://raw.github.com/tpenner/ingress-intel-total-conversion/gh-pages/plugins/show-own-portals.user.js
